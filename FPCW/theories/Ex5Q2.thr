@@ -1,0 +1,43 @@
+THEORY Ex5Q2
+IMPORT-THEORY Equality
+IMPORT-THEORY Boolean
+IMPORT-THEORY Arithmetic
+IMPORT-THEORY List
+IMPORT-HASKELL List
+IMPORT-HASKELL Ex5
+
+THEOREM ex5q2
+
+   frec 24 == 45
+
+STRATEGY ReduceLHS
+
+  frec 24
+= DEF frec
+  if 24 <= 8 then 5 else (24 + frec (24 - 8))
+= SIMP
+  if False then 5 else (24 + frec 16)
+= IF 2
+  24 + frec (16)
+= DEF frec
+  24 + (if 16 <= 8 then 5 else 16 + frec (16 - 8 ))
+= SIMP
+  24 + (if False then 5 else 16 + frec (8))
+= IF 2
+  24 + (16 + frec(8))
+= LAW add_assoc l2r
+  (24 + 16) + frec(8)
+= SIMP
+  40 + frec(8)
+= DEF frec
+  40 + (if 8 <= 8 then 5 else (8 + frec (8 - 8)))
+= SIMP
+  40 + (if True then 5 else 8 + frec(0))
+= IF 1
+  40 + 5
+= SIMP
+  45
+END ReduceLHS
+
+QED ex5q2
+

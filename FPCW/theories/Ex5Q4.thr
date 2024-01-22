@@ -1,0 +1,52 @@
+THEORY Ex5Q4
+  IMPORT-THEORY Equality
+  IMPORT-THEORY Boolean
+  IMPORT-THEORY Arithmetic
+  IMPORT-THEORY List
+  IMPORT-HASKELL List
+  IMPORT-HASKELL Ex5
+
+  THEOREM ex5q4
+    casef (x+1) > casef x
+
+    STRATEGY CaseSplit Plus1Order
+
+      CASE 1 (x < 2)
+
+        SHOW
+          casef (x+1) > casef x
+
+        STRATEGY ReduceAll
+          casef (x+1) > casef x
+        END ReduceAll
+
+      END CASE 1
+
+      CASE 2 (x == 2)
+
+        SHOW
+          casef (x+1) > casef x
+
+        STRATEGY ReduceAll
+          casef (x+1) > casef x
+        END ReduceAll
+
+      END CASE 2
+
+    END CaseSplit
+
+  QED ex5q4
+
+  CASE-SCHEME Plus1Order
+    CASE 1 (x < 2)
+    CASE 2 (x == 2)
+    CASE 3 (x == 3)
+    CASE 4 (x > 3)
+    EXHAUSTIVE (x < 2) || (x == 2) || (x == 3) || (x > 3)
+    EXCLUSIVE 1 2 not((x < 2) && (x == 2))
+    EXCLUSIVE 1 3 not((x < 2) && (x == 3))
+    EXCLUSIVE 1 4 not((x < 2) && (x > 3))
+    EXCLUSIVE 2 3 not((x == 2) && (x == 3))
+    EXCLUSIVE 2 4 not((x == 2) && (x > 3))
+    EXCLUSIVE 3 4 not((x == 3) && (x > 3))
+
